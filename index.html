@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>希卡里Hikari | 个人主页</title>
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <!-- 浏览器标签栏图标：你要求图标不改，所以继续沿用当前 favicon 文件。 -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <!-- 首页流光背景：这是 image2 生成后放入 assets 的文件，想替换背景可以改 site-data.js 的 heroImage。 -->
+  <link rel="preload" as="image" href="assets/hikari-liquid-flow-v3.png">
+  <link rel="stylesheet" href="styles.css?v=20260624-liquid-v4">
+</head>
+<body class="home-page">
+  <!--
+    首页说明：
+    1. 个人信息来自同目录下的“个人信息.txt”，文件名在 site-data.js 里改。
+    2. 头像来自同目录下的“头像.jpg”，替换头像时覆盖原图或改 site-data.js。
+    3. 流光背景来自 assets/hikari-liquid-flow-v3.png，是本次用 image2 生成的新资产。
+    4. Hikari 大字、canvas 光场、模式切换、QQ 复制都由 home.js 控制。
+  -->
+  <div id="cursorLight" class="cursor-light" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="返回首页">
+      <span class="brand-mark">H</span>
+      <span class="brand-text">Hikari</span>
+    </a>
+
+    <nav class="top-nav" aria-label="主导航">
+      <a href="index.html" aria-current="page">首页</a>
+      <a href="videos.html">视频</a>
+    </nav>
+  </header>
+
+  <main class="home-shell">
+    <!-- 首屏：真实流光图片 + canvas 动效 + Hikari 持续交互。 -->
+    <section id="heroStage" class="liquid-hero" aria-labelledby="profile-name">
+      <img id="heroBackdrop" class="liquid-backdrop" src="assets/hikari-liquid-flow-v3.png" alt="">
+      <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+
+      <div class="hero-layout">
+        <section class="hero-copy">
+          <p class="eyebrow">Hikari Personal Interface</p>
+          <button id="interactiveHikari" class="hikari-word" type="button" aria-label="Hikari">
+            <span>H</span>
+            <span>i</span>
+            <span>k</span>
+            <span>a</span>
+            <span>r</span>
+            <span>i</span>
+          </button>
+          <h1 id="profile-name" class="sr-only">希卡里Hikari</h1>
+          <p id="profile-summary" class="profile-summary">正在整理个人信息...</p>
+
+          <div class="hero-actions" aria-label="快捷操作">
+            <button id="copyQqButton" class="qq-copy-button" type="button">
+              <span class="button-kicker">QQ</span>
+              <strong id="qqNumber">读取中</strong>
+              <span class="button-status">复制</span>
+            </button>
+            <a id="emailLink" class="email-link" href="#">Gmail</a>
+            <a class="primary-link" href="videos.html">视频作品</a>
+          </div>
+
+          <p id="copyFeedback" class="copy-feedback" role="status" aria-live="polite"></p>
+        </section>
+
+        <!-- 头像资料面板：图片路径由 site-data.js 控制，CSS 会保证不变形。 -->
+        <aside id="portraitCard" class="identity-panel" aria-label="个人身份面板">
+          <div class="portrait-frame">
+            <img id="avatarImage" class="avatar-image" src="头像.jpg" alt="个人头像">
+          </div>
+          <div class="identity-lines">
+            <div class="identity-line">
+              <span>Signal</span>
+              <strong id="signalName">读取中</strong>
+            </div>
+            <div class="identity-line">
+              <span>QQ</span>
+              <strong id="signalQq">读取中</strong>
+            </div>
+            <div class="identity-line">
+              <span>Mail</span>
+              <strong id="signalEmail">读取中</strong>
+            </div>
+          </div>
+        </aside>
+
+        <!-- 光场控制台：访客可以持续切换首页动效模式和光强。 -->
+        <aside class="control-deck" aria-label="首页光场控制台">
+          <div class="clock-module" aria-label="北京时间">
+            <span class="clock-label">北京时间</span>
+            <strong id="beijingClock">--:--:--</strong>
+            <span id="beijingDate" class="clock-date">----/--/--</span>
+          </div>
+
+          <div class="scene-console">
+            <span class="console-label" id="heroModeLabel">Liquid Flow</span>
+            <div class="mode-row" role="group" aria-label="首页动效模式">
+              <button class="mode-button is-active" type="button" data-hero-mode="liquid" aria-pressed="true">液态</button>
+              <button class="mode-button" type="button" data-hero-mode="orbit" aria-pressed="false">星轨</button>
+              <button class="mode-button" type="button" data-hero-mode="focus" aria-pressed="false">聚焦</button>
+            </div>
+            <label class="intensity-control" for="lightIntensity">
+              光强
+              <input id="lightIntensity" type="range" min="0.45" max="1.45" step="0.05" value="1">
+            </label>
+          </div>
+        </aside>
+      </div>
+
+      <div class="scroll-cue">Profile / Audio / Video</div>
+    </section>
+
+    <div class="content-surface">
+      <!-- 个人信息区：home.js 会读取 txt 后自动整理卡片。 -->
+      <section class="content-band" aria-labelledby="info-title">
+        <div class="section-heading">
+          <p class="eyebrow">Profile</p>
+          <h2 id="info-title">个人信息</h2>
+          <p class="section-note">这里会根据“个人信息.txt”自动整理出 B 站名、QQ、Gmail 和完整资料。</p>
+        </div>
+        <div id="profileDetails" class="signal-grid"></div>
+        <article class="profile-text-block" aria-label="完整个人信息">
+          <p id="profileFullText">正在读取个人信息...</p>
+        </article>
+      </section>
+
+      <!-- 音频展示区：新增音频时在 site-data.js 的 audioFiles 里补一段即可。 -->
+      <section class="content-band" aria-labelledby="audio-title">
+        <div class="section-heading">
+          <p class="eyebrow">Audio</p>
+          <h2 id="audio-title">音频作品</h2>
+          <p class="section-note">当前目录里的音频会整理为可播放模块，访客可以直接在线试听。</p>
+        </div>
+        <div id="audioList" class="audio-list"></div>
+      </section>
+
+      <!-- 视频入口：视频列表和网页内播放功能在 videos.html。 -->
+      <section class="content-band" aria-labelledby="video-entry-title">
+        <div class="media-gateway">
+          <div>
+            <p class="eyebrow">Video Archive</p>
+            <h2 id="video-entry-title">视频作品</h2>
+            <p>视频内容被整理到独立二级页面，点击后能在网页内直接播放，并且电脑和手机排版都会自适应。</p>
+          </div>
+          <a class="primary-link" href="videos.html">进入视频页</a>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <span>© <span id="currentYear"></span> 希卡里Hikari</span>
+        <span>个人主页持续更新中</span>
+      </footer>
+    </div>
+  </main>
+
+  <script src="site-data.js?v=20260624-liquid-v4"></script>
+  <script src="home.js?v=20260624-liquid-v4"></script>
+</body>
+</html>

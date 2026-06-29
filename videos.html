@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>视频作品 | 希卡里Hikari</title>
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <!-- 浏览器标签栏图标：和首页共用同一套 favicon 文件。 -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css?v=20260624-liquid-v4">
+</head>
+<body class="video-page">
+  <!--
+    视频页说明：
+    1. 页面不会把视频写死在 HTML 里，而是从 site-data.js 的 videoFiles 读取。
+    2. 以后新增 mp4/webm/mov 等视频后，把文件放进本目录，再到 site-data.js 添加一行即可。
+    3. 如果你之后让我帮你整理新视频，我会直接扫描目录并更新 site-data.js。
+  -->
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="返回首页">
+      <span class="brand-mark">H</span>
+      <span class="brand-text">Hikari</span>
+    </a>
+
+    <nav class="top-nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="videos.html" aria-current="page">视频</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-title-band" aria-labelledby="video-page-title">
+      <a class="back-link" href="index.html">返回首页</a>
+      <p class="eyebrow">Video</p>
+      <h1 id="video-page-title">视频作品</h1>
+      <p>选择下面的视频后，会在当前页面直接播放。</p>
+    </section>
+
+    <!-- 主播放器：videos.js 会在访客点击视频列表时切换播放源。 -->
+    <section class="player-section" aria-label="视频播放器">
+      <video id="mainVideoPlayer" class="main-video-player" controls preload="metadata"></video>
+      <div class="player-meta">
+        <strong id="currentVideoTitle">正在读取视频列表...</strong>
+        <span id="currentVideoInfo">请选择一个视频</span>
+      </div>
+    </section>
+
+    <!-- 视频列表：由 videos.js 根据 site-data.js 自动生成。 -->
+    <section class="content-band" aria-labelledby="video-list-title">
+      <div class="section-heading">
+        <p class="eyebrow">Playlist</p>
+        <h2 id="video-list-title">视频列表</h2>
+      </div>
+      <div id="videoList" class="video-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© <span id="currentYear"></span> 希卡里Hikari</span>
+    <span>返回首页可查看个人信息和音频作品</span>
+  </footer>
+
+  <script src="site-data.js?v=20260624-liquid-v4"></script>
+  <script src="videos.js?v=20260624-liquid-v4"></script>
+</body>
+</html>
